@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonContent, IonTitle, IonButton, IonIcon } from "@ionic/angular/standalone";
+import { IonContent, IonButton, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
 	selector: 'app-login-signup',
@@ -8,10 +8,7 @@ import { IonHeader, IonToolbar, IonContent, IonTitle, IonButton, IonIcon } from 
 	imports: [
 		IonIcon,
 		IonButton,
-		IonTitle,
-		IonContent,
-		IonToolbar,
-		IonHeader
+		IonContent
 	]
 })
 export class LoginSignupPage implements OnInit
