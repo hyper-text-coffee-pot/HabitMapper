@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-title>Login / Signup</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true"
+			 class="ion-padding">
+	<div class="login-container">
+		<img src="assets/logo.png"
+			 alt="Logo"
+			 class="logo" />
+		<ion-button expand="block"
+					color="primary"
+					(click)="signInWithGoogle()">
+			<ion-icon slot="start"
+					  name="logo-google"></ion-icon>
+			Sign in with Google
+		</ion-button>
+	</div>
+</ion-content>
