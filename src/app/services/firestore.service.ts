@@ -23,6 +23,14 @@ export class FirestoreService
 		// return addDoc(collection(this.firestore, `users/${ userid }`), { userid });
 	}
 
+	public addUser(userId: string): void
+	{
+		userId = userId.trim();
+		this.addDocument(userId)
+			.then(() => console.log('Document added'))
+			.catch(error => console.error('Error adding document:', error));
+	}
+
 	// // Get all documents from a collection
 	// getDocuments(collectionName: string): Observable<any[]>
 	// {

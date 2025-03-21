@@ -13,6 +13,20 @@
 			<ion-title size="large">Profile</ion-title>
 		</ion-toolbar>
 	</ion-header>
-
-	<div>Hllo</div>
+	<ion-card class="center-content">
+		<ion-card-header class="center-content">
+			<ion-img [src]="currentUser?.photoURL"
+					 alt="Profile Picture"
+					 class="profile-picture"></ion-img>
+			<ion-card-title>{{currentUser?.displayName}}</ion-card-title>
+			<ion-card-subtitle>{{currentUser?.email}}</ion-card-subtitle>
+		</ion-card-header>
+	</ion-card>
+	<hr class="line-break">
+	<ion-button expand="block"
+				color="danger"
+				fill="outline"
+				(click)="signOut()">
+		Logout
+	</ion-button>
 </ion-content>
