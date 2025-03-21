@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonContent, IonButton, IonIcon } from "@ionic/angular/standalone";
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
+import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
 	selector: 'app-login-signup',
@@ -17,8 +17,9 @@ import { Router } from '@angular/router';
 export class LoginSignupPage implements OnInit
 {
 	constructor(
-		private afAuth: AngularFireAuth,
-		private router: Router
+		private afAuth: Auth,
+		private router: Router,
+		private firestoreService: FirestoreService
 	) { }
 
 	public ngOnInit(): void { }
@@ -27,13 +28,27 @@ export class LoginSignupPage implements OnInit
 	{
 		try
 		{
-			const result = await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-			console.log('User signed in:', result.user);
-			localStorage.setItem('user', JSON.stringify(result.user));
-			this.router.navigate(['/tabs']);
+			const result = signInWithPopup(this.afAuth, new GoogleAuthProvider());
+			console.log('User signed in:', (await result).user);
+			localStorage.setItem('user', JSON.stringify((await result).user));
+			// this.router.navigate(['/tabs']);
 		} catch (error)
 		{
 			console.error('Error signing in with Google:', error);
+		}
+	}
+
+	addDocument()
+	{
+		const user = JSON.parse(localStorage.getItem('user') || '{}');
+		if (user && user.uid)
+		{
+			this.firestoreService.addDocument(user.uid)
+				.then(() => console.log('Document added'))
+				.catch(error => console.error('Error adding document:', error));
+		} else
+		{
+			console.error('User not authenticated');
 		}
 	}
 }

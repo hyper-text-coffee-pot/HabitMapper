@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
-  standalone: false,
+	selector: 'app-tab1',
+	templateUrl: 'tab1.page.html',
+	styleUrls: ['tab1.page.scss'],
+	standalone: false,
 })
-export class Tab1Page {
+export class Tab1Page
+{
+	constructor(private firestoreService: FirestoreService) { }
 
-  constructor() {}
-
+	// addDocument()
+	// {
+	// 	this.firestoreService.addDocument('test', { name: 'John Doe' })
+	// 		.then(() => console.log('Document added'));
+	// }
 }
