@@ -1,0 +1,10 @@
+services:
+  habitmapper:
+    build:
+      context: .
+      args:
+        NODE_ENV: development
+    environment:
+      NODE_ENV: development
+    ports:
+      - 4200:80
