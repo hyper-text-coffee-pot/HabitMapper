@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAnalytics } from '@angular/fire/compat/analytics';
+import { Analytics, logEvent } from '@angular/fire/analytics';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class LoggerService
 {
-	constructor(private analytics: AngularFireAnalytics) { }
+	constructor(private analytics: Analytics) { }
 
 	public logEvent(): void
 	{
-		this.analytics.logEvent('some_event', { some_param: 'some_value' });
+		logEvent(this.analytics, 'some_event', { some_param: 'some_value' });
 	}
 }
