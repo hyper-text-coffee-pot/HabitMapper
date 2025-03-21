@@ -28,27 +28,30 @@ export class LoginSignupPage implements OnInit
 	{
 		try
 		{
-			const result = signInWithPopup(this.afAuth, new GoogleAuthProvider());
-			console.log('User signed in:', (await result).user);
-			localStorage.setItem('user', JSON.stringify((await result).user));
-			// this.router.navigate(['/tabs']);
-		} catch (error)
+			signInWithPopup(this.afAuth, new GoogleAuthProvider())
+				.then(result =>
+				{
+					if (result.user)
+						this.addUser(result.user.uid);
+
+					localStorage.setItem('user', JSON.stringify(result?.user));
+
+					this.router.navigate(['/tabs']);
+				});
+
+
+		}
+		catch (error)
 		{
 			console.error('Error signing in with Google:', error);
 		}
 	}
 
-	addDocument()
+	private addUser(userId: string): void
 	{
-		const user = JSON.parse(localStorage.getItem('user') || '{}');
-		if (user && user.uid)
-		{
-			this.firestoreService.addDocument(user.uid)
-				.then(() => console.log('Document added'))
-				.catch(error => console.error('Error adding document:', error));
-		} else
-		{
-			console.error('User not authenticated');
-		}
+		userId = userId.trim();
+		this.firestoreService.addDocument(userId)
+			.then(() => console.log('Document added'))
+			.catch(error => console.error('Error adding document:', error));
 	}
 }
