@@ -8,8 +8,8 @@ export class LoggerService
 {
 	constructor(private analytics: Analytics) { }
 
-	public logEvent(): void
+	public logEvent(eventTitle: string, data: {}): void
 	{
-		logEvent(this.analytics, 'some_event', { some_param: 'some_value' });
+		logEvent(this.analytics, eventTitle, data);
 	}
 }

@@ -18,14 +18,18 @@ export class Tab1Page
 		private authService: AuthService,
 		private alertController: AlertController)
 	{
-		this.firestoreService.getUser(this.authService.getCurrentUser().uid).then((user) =>
+		const currentUser = this.authService.getCurrentUser();
+		if (currentUser?.authUser?.uid)
 		{
-			console.log(user);
-			if (user)
+			this.firestoreService.getUser(currentUser.authUser.uid).then((user) =>
 			{
-				this.isTutorialComplete = user.isTutorialComplete;
-			}
-		});
+				console.log(user);
+				if (user)
+				{
+					this.isTutorialComplete = user.isTutorialComplete;
+				}
+			});
+		}
 
 		this.habitForm = this.formBuilder.group({
 			habitName: ['', Validators.required],
@@ -45,8 +49,12 @@ export class Tab1Page
 
 	public closeCard(): void
 	{
-		this.isTutorialComplete = true;
-		this.firestoreService.updateUser(this.authService.getCurrentUser().uid, { isTutorialComplete: true });
+		const currentUser = this.authService.getCurrentUser();
+		if (currentUser?.authUser?.uid)
+		{
+			this.isTutorialComplete = true;
+			this.firestoreService.updateUser(currentUser.authUser.uid, { isTutorialComplete: true });
+		}
 	}
 
 	public async logHabit(): Promise<void>
@@ -59,10 +67,12 @@ export class Tab1Page
 		}
 		else
 		{
-			console.log(this.habitForm.value);
 			const user = this.authService.getCurrentUser();
-			this.firestoreService.addHabit(user.uid, this.habitForm.value);
-			this.habitForm.reset();
+			if (user?.authUser?.uid)
+			{
+				this.firestoreService.addHabit(user?.authUser?.uid, this.habitForm.value);
+				this.habitForm.reset();
+			}
 		}
 	}
 

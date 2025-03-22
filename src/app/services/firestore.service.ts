@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { Firestore, setDoc, doc, updateDoc, arrayUnion, getDoc } from '@angular/fire/firestore';
 
 @Injectable({
@@ -33,8 +34,13 @@ export class FirestoreService
 		setDoc(doc(this.firestore, `users/${ userId }`), {}, { merge: true });
 	}
 
-	public async getUser(userId: string): Promise<any>
+	public async getUser(userId: string | undefined): Promise<any>
 	{
+		if (!userId)
+		{
+			return null;
+		}
+
 		const userDocRef = doc(this.firestore, `users/${ userId }`);
 		const userDoc = await getDoc(userDocRef);
 		if (userDoc.exists())

@@ -16,11 +16,11 @@
 	<ion-card class="center-content">
 		<ion-card-header class="center-content">
 			<ion-card-subtitle>Controlled by Google&trade;</ion-card-subtitle><br />
-			<ion-img [src]="currentUser?.photoURL"
+			<ion-img [src]="currentUser?.authUser?.photoURL"
 					 alt="Profile Picture"
 					 class="profile-picture"></ion-img>
-			<ion-card-title>{{currentUser?.displayName}}</ion-card-title>
-			<ion-card-subtitle>{{currentUser?.email}}</ion-card-subtitle>
+			<ion-card-title>{{currentUser?.authUser?.displayName}}</ion-card-title>
+			<ion-card-subtitle>{{currentUser?.authUser?.email}}</ion-card-subtitle>
 		</ion-card-header>
 	</ion-card>
 	<hr class="line-break">
