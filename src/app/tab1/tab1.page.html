@@ -99,6 +99,7 @@
 			</ion-list>
 		</ion-list>
 		<ion-button expand="block"
-					type="submit">Log Habit</ion-button>
+					type="submit"
+					[disabled]="habitForm.invalid">Log Habit</ion-button>
 	</form>
 </ion-content>
