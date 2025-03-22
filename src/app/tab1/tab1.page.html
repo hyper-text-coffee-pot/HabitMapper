@@ -8,12 +8,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-	<ion-header>
-		<ion-toolbar>
-			<ion-title size="large">📝 Log a Habit</ion-title>
-		</ion-toolbar>
-	</ion-header>
-
 	@if (!isTutorialComplete)
 	{
 	<ion-card>
@@ -31,9 +25,12 @@
 	<form [formGroup]="habitForm"
 		  (ngSubmit)="logHabit()">
 		<ion-list>
+			<ion-title size="large">📝 Let's Log a Habit!</ion-title>
 			<ion-list>
 				<ion-item>
-					<ion-input label="Habit"
+					<ion-input label="Habit Name"
+							   labelPlacement="floating"
+							   type="text"
 							   placeholder="Procrastinating"
 							   name="habitName"
 							   formControlName="habitName"
@@ -41,31 +38,44 @@
 				</ion-item>
 				<ion-item>
 					<ion-input label="Emoji Mood"
+							   labelPlacement="floating"
+							   type="text"
 							   placeholder="😊 Add your own emoji"
 							   name="emojiMood"
-							   formControlName="emojiMood"></ion-input>
+							   formControlName="emojiMood"
+							   required="required"></ion-input>
 				</ion-item>
 				<ion-item>
-					<ion-input label="How are you feeling?"
+					<ion-input label="How are you feeling right now?"
+							   labelPlacement="floating"
+							   type="text"
 							   placeholder="Happy"
 							   name="emotion"
-							   formControlName="emotion"></ion-input>
+							   formControlName="emotion"
+							   required="required"></ion-input>
 				</ion-item>
 				<ion-item>
 					<ion-input label="Trigger"
+							   labelPlacement="floating"
+							   type="text"
 							   placeholder="My job"
 							   name="trigger"
-							   formControlName="trigger"></ion-input>
+							   formControlName="trigger"
+							   required="required"></ion-input>
 				</ion-item>
 				<ion-item>
-					<ion-input label="Context"
+					<ion-input label="Environment or Context"
+							   labelPlacement="floating"
+							   type="text"
 							   placeholder="In the office/At home"
 							   name="context"
-							   formControlName="context"></ion-input>
+							   formControlName="context"
+							   required="required"></ion-input>
 				</ion-item>
 				<ion-item>
-					<ion-label>Motivation level</ion-label>
-					<ion-range aria-label="Motivation Level"
+					<ion-range label="Motivation level"
+							   labelPlacement="stacked"
+							   aria-label="Motivation Level"
 							   [min]="0"
 							   [max]="5"
 							   [value]="3"
@@ -82,9 +92,11 @@
 				</ion-item>
 				<ion-item>
 					<ion-select label="Concern level"
+								labelPlacement="stacked"
 								placeholder="Not Concerned"
 								name="concernLevel"
-								formControlName="concernLevel">
+								formControlName="concernLevel"
+								required="required">
 						<ion-select-option value="0">Not Concerned</ion-select-option>
 						<ion-select-option value="1">Slightly Concerned</ion-select-option>
 						<ion-select-option value="2">Somewhat Concerned</ion-select-option>

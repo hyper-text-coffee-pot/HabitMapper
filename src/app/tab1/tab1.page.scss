@@ -1,3 +1,10 @@
+.center-content
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 ion-range::part(tick)
 {
 	background: #a2d2ff;
