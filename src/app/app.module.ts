@@ -9,6 +9,7 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [
@@ -17,7 +18,8 @@ import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
 	imports: [
 		BrowserModule,
 		IonicModule.forRoot(),
-		AppRoutingModule
+		AppRoutingModule,
+		ReactiveFormsModule
 	],
 	providers: [
 		{

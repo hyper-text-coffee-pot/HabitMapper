@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, setDoc, doc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, getDoc } from '@angular/fire/firestore';
 
 @Injectable({
 	providedIn: 'root'
@@ -9,43 +9,54 @@ export class FirestoreService
 	constructor(private firestore: Firestore) { }
 
 	// Add a new document to a collection
-	addDocument(userid: string): Promise<any>
+	addDocument(userId: string, data: any): Promise<any>
 	{
-		return setDoc(doc(this.firestore, `users/${ userid }`),
-			{
-				"color": "red",
-				"habits": [
-					"Procrastination"
-				],
-				"habit_name": "Procrastrination",
-				"mood": "🚀"
-			});
-		// return addDoc(collection(this.firestore, `users/${ userid }`), { userid });
+		// return setDoc(doc(this.firestore, `users/${ userid }`),
+		// 	{
+		// 		"color": "red",
+		// 		"habits": [
+		// 			"Procrastination"
+		// 		],
+		// 		"habit_name": "Procrastrination",
+		// 		"mood": "🚀"
+		// 	});
+		// return addDoc(collection(this.firestore, `users/${ userId }`), data);
+		return updateDoc(doc(this.firestore, `users/${ userId }`), { habits: arrayUnion(data) });
 	}
 
-	public addUser(userId: string): void
+	public addUser(userId: string): Promise<void>
 	{
 		userId = userId.trim();
-		this.addDocument(userId)
-			.then(() => console.log('Document added'))
-			.catch(error => console.error('Error adding document:', error));
+		const userDocRef = doc(this.firestore, `users/${ userId }`);
+		return setDoc(userDocRef, { isTutorialComplete: false }, { merge: true }); // Use merge: true to avoid overwriting
 	}
 
-	// // Get all documents from a collection
-	// getDocuments(collectionName: string): Observable<any[]>
-	// {
-	// 	return this.firestore.collection(collectionName).valueChanges();
-	// }
+	public async getUser(userId: string): Promise<any>
+	{
+		const userDocRef = doc(this.firestore, `users/${ userId }`);
+		const userDoc = await getDoc(userDocRef);
+		if (userDoc.exists())
+		{
+			return userDoc.data(); // Return the entire document data
+		} else
+		{
+			console.log("No such document!");
+			return null;
+		}
+	}
 
-	// // Update a document in a collection
-	// updateDocument(collectionName: string, docId: string, data: any): Promise<void>
-	// {
-	// 	return this.firestore.collection(collectionName).doc(docId).update(data);
-	// }
-
-	// // Delete a document from a collection
-	// deleteDocument(collectionName: string, docId: string): Promise<void>
-	// {
-	// 	return this.firestore.collection(collectionName).doc(docId).delete();
-	// }
+	public async getUserProperty(userId: string, property: string): Promise<any>
+	{
+		const userDocRef = doc(this.firestore, `users/${ userId }`);
+		const userDoc = await getDoc(userDocRef);
+		if (userDoc.exists())
+		{
+			const userData = userDoc.data();
+			return userData[property]; // Return the specific property
+		} else
+		{
+			console.log("No such document!");
+			return null;
+		}
+	}
 }
