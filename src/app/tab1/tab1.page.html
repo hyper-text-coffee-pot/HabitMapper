@@ -14,7 +14,9 @@
 		</ion-toolbar>
 	</ion-header>
 
-	<ion-card *ngIf="!showCard">
+	@if (!isTutorialComplete)
+	{
+	<ion-card>
 		<ion-card-header>
 			<ion-card-title>🧠 How do I do this?</ion-card-title>
 		</ion-card-header>
@@ -24,6 +26,7 @@
 		<ion-button fill="clear"
 					(click)="closeCard()">Got It</ion-button>
 	</ion-card>
+	}
 
 	<form [formGroup]="habitForm"
 		  (ngSubmit)="logHabit()">

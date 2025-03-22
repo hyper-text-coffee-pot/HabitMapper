@@ -21,7 +21,7 @@ export class Tab1Page
 			console.log(user);
 			if (user)
 			{
-				this.closeCard = user.isTutorialComplete;
+				this.isTutorialComplete = user.isTutorialComplete;
 			}
 		});
 
@@ -36,13 +36,15 @@ export class Tab1Page
 		});
 	}
 
-	public showCard: boolean = true;
+	// Default to false to prevent annoying flicker.
+	public isTutorialComplete: boolean = true;
 
 	public habitForm: FormGroup;
 
 	public closeCard(): void
 	{
-		this.showCard = false;
+		this.isTutorialComplete = true;
+		this.firestoreService.updateUser(this.authService.getCurrentUser().uid, { isTutorialComplete: true });
 	}
 
 	public logHabit(): void
@@ -56,7 +58,7 @@ export class Tab1Page
 		{
 			console.log(this.habitForm.value);
 			const user = this.authService.getCurrentUser();
-			this.firestoreService.addDocument(user.uid, this.habitForm.value);
+			this.firestoreService.addHabit(user.uid, this.habitForm.value);
 			this.habitForm.reset();
 		}
 	}
