@@ -11,7 +11,15 @@ export class FirestoreService
 	// Add a new document to a collection
 	addHabit(userId: string, data: any): Promise<any>
 	{
-		return updateDoc(doc(this.firestore, `users/${ userId }`), { habits: arrayUnion(data) });
+		return updateDoc(doc(this.firestore, `users/${ userId }`),
+			{
+				habits: arrayUnion(data),
+				previousHabitsList: arrayUnion(data.habitName.toLowerCase().trim()),
+				previousEmojisList: arrayUnion(data.emojiMood),
+				previousEmotionsList: arrayUnion(data.emotion.toLowerCase().trim()),
+				previousTriggersList: arrayUnion(data.trigger.toLowerCase().trim()),
+				previousContextsList: arrayUnion(data.context.toLowerCase().trim()),
+			});
 	}
 
 	/**
